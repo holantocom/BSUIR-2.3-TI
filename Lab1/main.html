@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chiphers</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+    <h4>"Столбцовый метод"</h4>
+    <input id="num1" type="text" placeholder="Ключ для шифрования"><button onclick="SendText(1)">Зашифровать</button>
+    <div id="ans1">Текст: </div>
+    <input id="num2" type="text" placeholder="Ключ для дешифровки"><button onclick="SendText(2)">Расшифровать</button>
+    <div id="ans2">Текст: </div>
+    <h4>Метод поворачивающейся решетки</h4>
+    <div id="matrix">
+        <input type="checkbox" class="scales3" name="feature" value="0" checked />
+        <input type="checkbox" class="scales3" name="feature" value="0"/>
+        <input type="checkbox" class="scales3" name="feature" value="0"/>
+        <input type="checkbox" class="scales3" name="feature" value="0"/><br>
+        <input type="checkbox" class="scales3" name="feature" value="0"/>
+        <input type="checkbox" class="scales3" name="feature" value="0"/>
+        <input type="checkbox" class="scales3" name="feature" value="0"/>
+        <input type="checkbox" class="scales3" name="feature" value="0" checked /><br>
+        <input type="checkbox" class="scales3" name="feature" value="0"/>
+        <input type="checkbox" class="scales3" name="feature" value="0"/>
+        <input type="checkbox" class="scales3" name="feature" value="0" checked />
+        <input type="checkbox" class="scales3" name="feature" value="0"/><br>
+        <input type="checkbox" class="scales3" name="feature" value="0"/>
+        <input type="checkbox" class="scales3" name="feature" value="0" checked />
+        <input type="checkbox" class="scales3" name="feature" value="0"/>
+        <input type="checkbox" class="scales3" name="feature" value="0"/>
+    </div>
+    <button onclick="Matrix(3)">Зашифровать</button>
+    <div id="ans3">Текст: </div>
+    <div id="matrix1">
+        <input type="checkbox" class="scales4" name="feature" value="0" checked />
+        <input type="checkbox" class="scales4" name="feature" value="0"/>
+        <input type="checkbox" class="scales4" name="feature" value="0"/>
+        <input type="checkbox" class="scales4" name="feature" value="0"/><br>
+        <input type="checkbox" class="scales4" name="feature" value="0"/>
+        <input type="checkbox" class="scales4" name="feature" value="0"/>
+        <input type="checkbox" class="scales4" name="feature" value="0"/>
+        <input type="checkbox" class="scales4" name="feature" value="0" checked /><br>
+        <input type="checkbox" class="scales4" name="feature" value="0"/>
+        <input type="checkbox" class="scales4" name="feature" value="0"/>
+        <input type="checkbox" class="scales4" name="feature" value="0" checked />
+        <input type="checkbox" class="scales4" name="feature" value="0"/><br>
+        <input type="checkbox" class="scales4" name="feature" value="0"/>
+        <input type="checkbox" class="scales4" name="feature" value="0" checked />
+        <input type="checkbox" class="scales4" name="feature" value="0"/>
+        <input type="checkbox" class="scales4" name="feature" value="0"/>
+    </div>
+    <button onclick="Matrix(4)">Расшифровать</button>
+    <div id="ans4">Текст: </div>
+    <h4>Алгоритм Виженера</h4>
+    <input id="num5" type="text" placeholder="Ключ для шифрования"><button onclick="SendText(5)">Зашифровать</button>
+    <div id="ans5">Текст: </div>
+    <input id="num6" type="text" placeholder="Ключ для дешифровки"><button onclick="SendText(6)">Расшифровать</button>
+    <div id="ans6">Текст: </div>
+    <script>
+        function SendText(id) {
+            var text = document.getElementById('num' + id).value;
+            SendData(text, id);
+        }
+        function Matrix(id) {
+            var str = '';
+            $(".scales"+ id +":checkbox").each(function() {
+                if ($(this).is(":checked")) {
+                    str = str + '1';
+                } else {
+                    str = str + '0';
+                }
+            });
+            SendData(str, id);
+        }
+        function SendData(text, id) {
+            $.ajax({
+                url:     'code.php',
+                type:     "POST",
+                data:     'text=' + text + '&id=' + id,
+                success: function(data) {
+                    $('#ans' + id).html('Текст: ' + data);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
